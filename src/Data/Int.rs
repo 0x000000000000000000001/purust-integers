@@ -46,17 +46,9 @@ pub fn Data_Int_fromNumberImpl(
     let num = n.unwrap_number();
     if num.is_finite() && num.fract() == 0.0 && num >= (-2147483648.0) && num <= (2147483647.0) {
         let int_val = num as i64;
-        crate::UnknownType::new(crate::Record_a {
-            tag: "Just",
-            vals: Some(std::rc::Rc::new(vec![crate::mk_int(int_val)])),
-            ..Default::default()
-        })
+        just.unwrap_func()(crate::mk_int(int_val))
     } else {
         eprintln!("fromNumberImpl returning Nothing for num={}", num);
-        crate::UnknownType::new(crate::Record_a {
-            tag: "Nothing",
-            vals: None,
-            ..Default::default()
-        })
+        nothing.clone()
     }
 }
