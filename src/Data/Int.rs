@@ -46,7 +46,7 @@ pub fn Data_Int_fromNumberImpl(
     let num = n.unwrap_number();
     if num.is_finite() && num.fract() == 0.0 && num >= (-2147483648.0) && num <= (2147483647.0) {
         let int_val = num as i64;
-        just.unwrap_func()(crate::mk_int(int_val))
+        just.unwrap_func1()(crate::mk_int(int_val))
     } else {
         eprintln!("fromNumberImpl returning Nothing for num={}", num);
         nothing.clone()
