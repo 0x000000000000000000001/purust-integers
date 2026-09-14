@@ -41,3 +41,19 @@ pub fn Data_Int_fromNumberImpl(
         nothing.clone()
     }
 }
+
+pub fn Data_Int_fromStringAsImpl(
+    just: purust_core::Func1<crate::UnknownType, std::rc::Rc<Purs_Data_Maybe::Maybe>>,
+    nothing: std::rc::Rc<Purs_Data_Maybe::Maybe>,
+    radix: i64,
+    input: String,
+) -> std::rc::Rc<Purs_Data_Maybe::Maybe> {
+    // Radix is constructed by Data.Int.radix (2..=36). Rust's signed i32
+    // parser enforces the same full ASCII-digit match and PureScript bounds
+    // as the JS regular expression followed by parseInt and the int32 check.
+    assert!((2..=36).contains(&radix), "Data.Int: invalid Radix");
+    match i32::from_str_radix(&input, radix as u32) {
+        Ok(value) => just(crate::mk_int(i64::from(value))),
+        Err(_) => nothing,
+    }
+}
